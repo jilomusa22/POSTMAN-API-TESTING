@@ -1,0 +1,541 @@
+{
+	"info": {
+		"_postman_id": "517aeb62-3b45-47c6-840d-208437114b6c",
+		"name": "REST API-SECURED API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5040522",
+		"_collection_link": "https://www.postman.com/kiranmm/workspace/isha-kiran/collection/5040522-517aeb62-3b45-47c6-840d-208437114b6c?action=share&source=collection_link&creator=5040522"
+	},
+	"item": [
+		{
+			"name": "POSITIVE TC",
+			"item": [
+				{
+					"name": "BASIC AUTH API",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// here is where we can write automation java scripts  - ASSERTIONS\r",
+									"\r",
+									"pm.test(\"Verify if response code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response description=OK\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response time <= 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response body is received from server\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response body is JSON\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response headers don't reveal sensitive/confidential project data\", function () {\r",
+									"    pm.response.to.not.have.header(\"Server\");\r",
+									"    pm.response.to.not.have.header(\"X-Powered-By\");\r",
+									"    pm.response.to.not.have.header(\"X-AspNet-Version\");\r",
+									"    pm.response.to.not.have.header(\"X-Powered-By-Plesk\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//order of test execution in Postman tool\r",
+									"\r",
+									"// pre-request-script --> API request --> API response --> Tests\r",
+									"\r",
+									"// script to delete collection variables\r",
+									"\r",
+									"pm.collectionVariables.unset(\"cUN\");\r",
+									"pm.collectionVariables.unset(\"cPWD\");\r",
+									"\r",
+									"// script to create collection variables\r",
+									"\r",
+									"pm.collectionVariables.set(\"cUN\", \"user\");\r",
+									"pm.collectionVariables.set(\"cPWD\", \"passwd\");\r",
+									"\r",
+									"// script to read the values of collection variables\r",
+									"\r",
+									"// pm.collectionVariables.get(\"cUN\");\r",
+									"var pwd = pm.collectionVariables.get(\"cPWD\");\r",
+									"\r",
+									"console.log(\"The value of cUN variable is \"+pm.collectionVariables.get(\"cUN\"));\r",
+									"console.log(\"The value of cPWD variable is \"+pwd);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{cPWD}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{cUN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://httpbin.org/basic-auth/user/passwd",
+							"protocol": "https",
+							"host": [
+								"httpbin",
+								"org"
+							],
+							"path": [
+								"basic-auth",
+								"user",
+								"passwd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BEARER TOKEN API",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// here is where we can write automation java scripts  - ASSERTIONS\r",
+									"\r",
+									"pm.test(\"Verify if response code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response description=OK\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response time <= 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response body is received from server\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response body is JSON\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response headers don't reveal sensitive/confidential project data\", function () {\r",
+									"    pm.response.to.not.have.header(\"Server\");\r",
+									"    pm.response.to.not.have.header(\"X-Powered-By\");\r",
+									"    pm.response.to.not.have.header(\"X-AspNet-Version\");\r",
+									"    pm.response.to.not.have.header(\"X-Powered-By-Plesk\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// script to delete global variable\r",
+									"\r",
+									"pm.globals.unset(\"gToken\");\r",
+									"\r",
+									"// script to create global variable\r",
+									"\r",
+									"pm.globals.set(\"gToken\", \"12345\");\r",
+									"\r",
+									"// script to read & print global variable\r",
+									"\r",
+									"var token = pm.globals.get(\"gToken\");\r",
+									"console.log(\"The value of global variable gToken is \"+token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{gToken}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{BEARER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://httpbin.org/bearer",
+							"protocol": "https",
+							"host": [
+								"httpbin",
+								"org"
+							],
+							"path": [
+								"bearer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DIGEST AUTH API",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// here is where we can write automation java scripts  - ASSERTIONS\r",
+									"\r",
+									"pm.test(\"Verify if response code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response description=OK\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response time <= 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response body is received from server\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response body is JSON\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response headers don't reveal sensitive/confidential project data\", function () {\r",
+									"    pm.response.to.not.have.header(\"Server\");\r",
+									"    pm.response.to.not.have.header(\"X-Powered-By\");\r",
+									"    pm.response.to.not.have.header(\"X-AspNet-Version\");\r",
+									"    pm.response.to.not.have.header(\"X-Powered-By-Plesk\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// scripts to delete environment variables\r",
+									"\r",
+									"pm.environment.unset(\"envUN\");\r",
+									"pm.environment.unset(\"envPWD\");\r",
+									"pm.environment.unset(\"envQOP\");\r",
+									"\r",
+									"// scripts to create environment variables\r",
+									"\r",
+									"pm.environment.set(\"envUN\", \"user\");\r",
+									"pm.environment.set(\"envPWD\", \"passwd\");\r",
+									"pm.environment.set(\"envQOP\", \"auth-int\");\r",
+									"\r",
+									"// script to know the current environment selection\r",
+									"\r",
+									"console.log(\"The current environment selected is \"+pm.environment.name);\r",
+									"\r",
+									"// scripts to read/fetch the values of environment variables & print them\r",
+									"\r",
+									"var un = pm.environment.get(\"envUN\");\r",
+									"var pwd = pm.environment.get(\"envPWD\");\r",
+									"\r",
+									"console.log(\"The environment variable envUN value is \"+un);\r",
+									"console.log(\"The environment variable envPWD value is \"+pwd);\r",
+									"console.log(\"The environment variable envQOP value is \"+pm.environment.get(\"envQOP\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "digest",
+							"digest": [
+								{
+									"key": "qop",
+									"value": "{{envQOP}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{envPWD}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{envUN}}",
+									"type": "string"
+								},
+								{
+									"key": "algorithm",
+									"value": "MD5",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://httpbin.org/digest-auth/auth/user/passwd",
+							"protocol": "https",
+							"host": [
+								"httpbin",
+								"org"
+							],
+							"path": [
+								"digest-auth",
+								"auth",
+								"user",
+								"passwd"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DDT-FUNCTIONS",
+			"item": [
+				{
+					"name": "BASIC AUTH API",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// here is where we can write automation java scripts  - ASSERTIONS\r",
+									"\r",
+									"pm.test(\"Verify if response code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response description=UNAUTHORIZED\", function () {\r",
+									"    pm.response.to.have.status(\"UNAUTHORIZED\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{$randomPassword}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{$randomUserName}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://httpbin.org/basic-auth/user/passwd",
+							"protocol": "https",
+							"host": [
+								"httpbin",
+								"org"
+							],
+							"path": [
+								"basic-auth",
+								"user",
+								"passwd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BEARER TOKEN API",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// here is where we can write automation java scripts  - ASSERTIONS\r",
+									"\r",
+									"pm.test(\"Verify if response code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response description=UNAUTHORIZED\", function () {\r",
+									"    pm.response.to.have.status(\"UNAUTHORIZED\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{$randomInt}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{BEARER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://httpbin.org/bearer",
+							"protocol": "https",
+							"host": [
+								"httpbin",
+								"org"
+							],
+							"path": [
+								"bearer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DIGEST AUTH API",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// here is where we can write automation java scripts  - ASSERTIONS\r",
+									"\r",
+									"pm.test(\"Verify if response code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response description=UNAUTHORIZED\", function () {\r",
+									"    pm.response.to.have.status(\"UNAUTHORIZED\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "digest",
+							"digest": [
+								{
+									"key": "password",
+									"value": "{{$randomPassword}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{$randomUserName}}",
+									"type": "string"
+								},
+								{
+									"key": "qop",
+									"value": "auth",
+									"type": "string"
+								},
+								{
+									"key": "algorithm",
+									"value": "MD5",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://httpbin.org/digest-auth/auth/user/passwd",
+							"protocol": "https",
+							"host": [
+								"httpbin",
+								"org"
+							],
+							"path": [
+								"digest-auth",
+								"auth",
+								"user",
+								"passwd"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "NEGATIVE TC",
+			"item": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "cUN",
+			"value": ""
+		},
+		{
+			"key": "cPWD",
+			"value": ""
+		}
+	]
+}
